@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'DZCamera', :exclusive => true do
+  pod "DZCamera", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "DZCamera", :path => "../"
+
+  pod 'FBSnapshotTestCase'
+end
