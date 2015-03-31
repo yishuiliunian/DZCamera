@@ -569,7 +569,23 @@ static float const kPSCameraPreviewHeight = 426;
 }
 - (void) handlePinchGesture:(UIPinchGestureRecognizer*)pg{
     if (pg.state == UIGestureRecognizerStateChanged) {
+        NSLog(@"pg scale is %f",pg.scale);
+        NSLog(@"factor is %f", _cameraManager.deviceInput.device.videoZoomFactor);
         
+        float currentFactor = _cameraManager.deviceInput.device.videoZoomFactor;
+        float scale = pg.scale;
+        float maxFactor  = MIN(_cameraManager.deviceInput.device.activeFormat.videoMaxZoomFactor,3);
+        float aimFactor = scale * currentFactor;
+        if (aimFactor < 1) {
+            aimFactor = 1;
+        }
+        if (aimFactor > maxFactor) {
+            aimFactor = maxFactor;
+        }
+        [_cameraManager.deviceInput.device lockForConfiguration:nil];
+        [_cameraManager.deviceInput.device cancelVideoZoomRamp];
+        [_cameraManager.deviceInput.device rampToVideoZoomFactor:aimFactor withRate:25];
+        [_cameraManager.deviceInput.device unlockForConfiguration];
     }
 }
 @end
