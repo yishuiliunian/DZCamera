@@ -6,11 +6,13 @@ PODS:
   - DZCamera (0.1.0):
     - DZCache
     - DZGeometryTools
+    - GPUImage
   - DZCDNFiles (1.0.1):
     - DZSinglonFactory
   - DZGeometryTools (1.0.3)
   - DZSinglonFactory (1.0.2)
   - FBSnapshotTestCase (1.6)
+  - GPUImage (0.1.6)
 
 DEPENDENCIES:
   - DZCamera (from `../`)
@@ -22,10 +24,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   DZCache: 90e5c8e055e0880d8c3eaeeecd520c78336c7f0b
-  DZCamera: c2d88256f2334202f2a6975fac571fbb3839a5b5
+  DZCamera: 6e0d91fa601caf3636d068d1d951adf19f5fb75e
   DZCDNFiles: 4e5d9d3facb81dc783ecda98efc759ee06e5961b
   DZGeometryTools: c13d63d3bb64e59a3795b98c14372b4c34385ab8
   DZSinglonFactory: 2b43251e9dcb1053c79a7c776dff5bbe0dea602b
   FBSnapshotTestCase: 9d5fe43b29ae3a0ed8fc829477971b281038f748
+  GPUImage: 4675ce4a5370ca92fcea8623b2a08b8f0c51b940
 
 COCOAPODS: 0.35.0.rc2

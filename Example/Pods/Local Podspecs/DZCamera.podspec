@@ -37,4 +37,5 @@ Pod::Spec.new do |s|
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'DZGeometryTools'
   s.dependency 'DZCache'
+  s.dependency 'GPUImage'
 end
