@@ -10,18 +10,18 @@
 Pod::Spec.new do |s|
   s.name             = "DZCamera"
   s.version          = "0.1.0"
-  s.summary          = "A short description of DZCamera."
+  s.summary          = "DZCamera基于AVFoundation的拍照组件，界面易于扩展和自定义"
   s.description      = <<-DESC
-                       An optional longer description of DZCamera
+                        DZCamera基于AVFoundation的拍照组件，界面易于扩展和自定义。是否从设计那里拿来了设计稿，结果发现相机的界面和系统的完全不一样，基于ImagePicker来改造界面也非常啰嗦。那么可以试一下DZCamera。
+                        This a project in progress。
+                        目前版本已经完成了相机的基本功能，还有一些细节需要调节一下。
 
-                       * Markdown format.
-                       * Don't worry about the indent, we strip it!
                        DESC
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/DZCamera"
+  s.homepage         = "https://github.com/yishuiliunian/DZCamera"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
   s.license          = 'MIT'
   s.author           = { "stonedong" => "yishuiliunian@gmail.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/DZCamera.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/yishuiliunian/DZCamera.git", :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.platform     = :ios, '7.0'
