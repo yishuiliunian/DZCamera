@@ -91,7 +91,7 @@ BOOL NSRangeCotainsIndex(NSRange range, NSInteger index)
 
 CGRect CGRectOfCenterForContainsSize(CGRect rect , CGSize size)
 {
-    return CGRectMake((CGRectGetWidth(rect) - size.width)/2, (CGRectGetHeight(rect) - size.height) /2, size.width, size.height);
+    return CGRectMake(CGRectGetMinX(rect) + (CGRectGetWidth(rect) - size.width)/2, CGRectGetMinY(rect) + (CGRectGetHeight(rect) - size.height) /2, size.width, size.height);
 }
 
 void CGPrintRect(CGRect rect )
@@ -150,6 +150,13 @@ CGSize CGCurrentScreenSize()
     return [[UIScreen mainScreen] applicationFrame].size;
 }
 
+CGFloat CGRectHeightOffsetCenter(CGRect rect , CGFloat height) {
+    return CGRectGetMinY(rect) + (CGRectGetHeight(rect) - height)/2;
+}
+
+CGFloat CGRectWidthOffsetCenter(CGRect rect , CGFloat width) {
+    return CGRectGetMinX(rect) + (CGRectGetWidth(rect) - width)/2;
+}
 
 BOOL CGScrrentIsRetina()
 {
@@ -172,6 +179,34 @@ CGSize CGCurrentRealPixSize()
     return CGSizeScale(CGCurrentScreenSize(), CGPixMultiFactor());
 }
 
+CGRect CGRectShrink(CGRect origin, CGFloat offset, CGRectEdge edge) {
+    CGRect rect = origin;
+    switch (edge) {
+        case CGRectMinYEdge:
+        {
+            rect.origin.y += offset;
+            rect.size.height -= offset;
+        }
+        case CGRectMinXEdge:
+        {
+            rect.origin.x += offset;
+            rect.size.width -= offset;
+        }
+        case CGRectMaxXEdge:
+        {
+            rect.size.width -= offset;
+        }
+        case CGRectMaxYEdge:
+        {
+            rect.size.height -= offset;
+        }
+            
+        default:
+            break;
+    }
+    return rect;
+    
+}
 @implementation DZGeometryTools
 
 @end

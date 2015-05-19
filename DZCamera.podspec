@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "DZCamera"
-  s.version          = "0.1.2"
+  s.version          = "0.1.3"
   s.summary          = "DZCamera基于AVFoundation的拍照组件，界面易于扩展和自定义"
   s.description      = <<-DESC
                         DZCamera基于AVFoundation的拍照组件，界面易于扩展和自定义。是否从设计那里拿来了设计稿，结果发现相机的界面和系统的完全不一样，基于ImagePicker来改造界面也非常啰嗦。那么可以试一下DZCamera。

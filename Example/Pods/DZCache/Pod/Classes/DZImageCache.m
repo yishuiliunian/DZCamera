@@ -11,6 +11,26 @@
 #import "DZSingletonFactory.h"
 #import "DZCDNActionManager.h"
 #import "DZDevices.h"
+
+
+NSString* ImageSubfixForCurrentScreen()
+{
+    static NSString* subfix = @"";
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        CGFloat scale = [UIScreen mainScreen].scale;
+        if (ABS(scale - 3) < 0.01) {
+            subfix = @"@3x";
+        } else if (ABS(scale - 2) < 0.01) {
+            subfix = @"@2x";
+        } else {
+            subfix = @"";
+        }
+    });
+    
+    return subfix;
+}
+
 @implementation DZImageCache
 
 + (DZImageCache*) shareCache
@@ -18,11 +38,91 @@
     return DZSingleForClass([DZImageCache class]);
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setupDefaultSourceType];
+    }
+    return self;
+}
+
+- (void) setupAssetsSourceType
+{
+    _sourceType = DZImageCacheSourceAssets;
+}
+
+- (void) setupDirectorySourceTypeWithPath:(NSString *)directory
+{
+    _sourceType = DZImageCacheSourceDirectory;
+    _imagesDirectory = directory;
+}
+
+- (void) setupDefaultSourceType
+{
+    _sourceType = DZImageCacheSourceDefault;
+}
+
 - (UIImage*) cachedImageForName:(NSString*)name
 {
     return [self cachedImageForName:name inBundle:[NSBundle mainBundle]];
 }
 
+- (UIImage*) imageLoadFromDiretory:(NSString*)dir name:(NSString*)name bundle:(NSBundle*)bundle fileTypes:(NSArray*)fileTypes
+{
+    NSString* path = nil;
+    
+    NSString*(^ImagePathWithName)(NSString* realName) = ^(NSString* realName) {
+        NSString* path;
+        for (NSString* type in fileTypes) {
+            if (self.imagesDirectory) {
+                path = [bundle  pathForResource:realName ofType:type inDirectory:self.imagesDirectory];
+            } else {
+                path = [bundle pathForResource:realName ofType:type];
+            }
+            if (path) {
+                return path;
+            }
+        }
+        return (NSString*)nil;
+    };
+    
+    NSString*(^ImagePathForSubfix)(NSString* name, NSString* subfix) = ^(NSString* name, NSString* subfix) {
+        NSString* realName = [NSString stringWithFormat:@"%@%@",name,subfix];
+        return ImagePathWithName(realName);
+    };
+    
+    static NSMutableArray* ImageNameSubfixArray = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        ImageNameSubfixArray = [@[@"@3x", @"@2x", @""] mutableCopy];
+        NSString* imageSubfix = ImageSubfixForCurrentScreen();
+        NSInteger index = NSNotFound;
+        for (int i = 0; i < ImageNameSubfixArray.count; i++) {
+            NSString* fix = ImageNameSubfixArray[i];
+            if ([fix isEqualToString:imageSubfix]) {
+                index = i;
+            }
+        }
+        if (index != NSNotFound) {
+            [ImageNameSubfixArray exchangeObjectAtIndex:index withObjectAtIndex:0];
+        } else {
+            [ImageNameSubfixArray insertObject:imageSubfix atIndex:0];
+        }
+    });
+    
+    for (NSString* subfix in ImageNameSubfixArray) {
+        path = ImagePathForSubfix(name, subfix);
+        if (path) {
+            break;
+        }
+    }
+    
+    if (!path) {
+        return nil;
+    }
+    return [UIImage imageWithContentsOfFile:path];
+}
 - (UIImage*) cachedImageForName:(NSString *)name inBundle:(NSBundle*)bundle
 {
     if (name == nil) {
@@ -49,34 +149,21 @@
         fileName = comps[0];
         [fileTypes addObject:comps[1]];
     }
-    NSString* path = nil;
-    
-    
-    for (NSString* type in fileTypes) {
-        
-        NSString*  retinaFileName = [fileName stringByAppendingString:@"@2x"];
-        if (self.imagesDirectory) {
-            path = [bundle  pathForResource:retinaFileName ofType:type inDirectory:self.imagesDirectory];
-        } else {
-            path = [bundle pathForResource:retinaFileName ofType:type];
-        }
-        if (path) {
-            break;
-        }
-        if (self.imagesDirectory) {
-            path = [bundle pathForResource:fileName ofType:type inDirectory:self.imagesDirectory];
-        } else {
-            path = [bundle pathForResource:fileName ofType:type];
-        }
-        if (path) {
-            break;
-        }
+    if ([fileName hasSuffix:@"3x"]) {
+        fileName = [fileName substringToIndex:fileName.length - @"3x".length];
+    } else if ([fileName hasSuffix:@"2x"]) {
+        fileName = [fileName substringToIndex:fileName.length - @"2x".length];
     }
     
-    image = [UIImage imageWithContentsOfFile:path];
-    if (image) {
-        [DZMemoryShareCache setObject:image forKey:path];
+    if (_sourceType == DZImageCacheSourceDefault) {
+        image = [self imageLoadFromDiretory:nil name:fileName bundle:bundle fileTypes:fileTypes];
+    } else if (_sourceType == DZImageCacheSourceDirectory) {
+        image = [self imageLoadFromDiretory:self.imagesDirectory name:fileName bundle:bundle fileTypes:fileTypes];
+    } else if (_sourceType == DZImageCacheSourceAssets)
+    {
+        image = [UIImage imageNamed:fileName];
     }
+    
     return image;
 }
 - (UIImage*) cachedImageFroPath:(NSString*)path
@@ -110,12 +197,10 @@
             } else {
                 if (name) {
                     image = [self cachedImageForName:name];
-                    
                     if (block) {
                         block(image);
                     }
                 }
-
             }
         }];
     }
@@ -127,3 +212,4 @@
 }
 
 @end
+

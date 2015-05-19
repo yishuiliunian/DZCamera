@@ -1,8 +1,8 @@
 CLANG_MODULES_AUTOLINK = YES
 FRAMEWORK_SEARCH_PATHS = $(inherited) "$(SDKROOT)/Developer/Library/Frameworks" "$(PLATFORM_DIR)/Developer/Library/Frameworks"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/DZCDNFiles" "${PODS_ROOT}/Headers/Public/DZCache" "${PODS_ROOT}/Headers/Public/DZCamera" "${PODS_ROOT}/Headers/Public/DZGeometryTools" "${PODS_ROOT}/Headers/Public/DZSinglonFactory" "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase" "${PODS_ROOT}/Headers/Public/GPUImage"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/DZCDNFiles" "${PODS_ROOT}/Headers/Public/DZCache" "${PODS_ROOT}/Headers/Public/DZCamera" "${PODS_ROOT}/Headers/Public/DZGeometryTools" "${PODS_ROOT}/Headers/Public/DZSinglonFactory" "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase" "${PODS_ROOT}/Headers/Public/GPUImage"
 OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/DZCDNFiles" -isystem "${PODS_ROOT}/Headers/Public/DZCache" -isystem "${PODS_ROOT}/Headers/Public/DZCamera" -isystem "${PODS_ROOT}/Headers/Public/DZGeometryTools" -isystem "${PODS_ROOT}/Headers/Public/DZSinglonFactory" -isystem "${PODS_ROOT}/Headers/Public/FBSnapshotTestCase" -isystem "${PODS_ROOT}/Headers/Public/GPUImage"
-OTHER_LDFLAGS = -ObjC -l"Pods-Tests-DZCDNFiles" -l"Pods-Tests-DZCache" -l"Pods-Tests-DZCamera" -l"Pods-Tests-DZGeometryTools" -l"Pods-Tests-DZSinglonFactory" -l"Pods-Tests-FBSnapshotTestCase" -l"Pods-Tests-GPUImage" -framework "AVFoundation" -framework "CoreMedia" -framework "OpenGLES" -framework "QuartzCore" -framework "UIKit" -framework "XCTest"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"Pods-Tests-DZCDNFiles" -l"Pods-Tests-DZCache" -l"Pods-Tests-DZCamera" -l"Pods-Tests-DZGeometryTools" -l"Pods-Tests-DZSinglonFactory" -l"Pods-Tests-FBSnapshotTestCase" -l"Pods-Tests-GPUImage" -framework "AVFoundation" -framework "CoreMedia" -framework "OpenGLES" -framework "QuartzCore" -framework "UIKit" -framework "XCTest"
 OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
 PODS_ROOT = ${SRCROOT}/Pods
