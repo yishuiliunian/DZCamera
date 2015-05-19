@@ -80,12 +80,6 @@ typedef void(^DZAnimationCompletionBlock)(void);
 
 
 /**
- * 配置添加CameraViewController 的时候的动画效果，在子类化实现该方法的时候，一定要调用block;
- * @param  block 动画完成后的block
- * @return void
- */
-- (void) configureAddCameraViewControllerCompletionAnimation:(DZAnimationCompletionBlock)block;
-/**
  * 配置删除CameraViewController 的时候的动画效果，在子类化实现该方法的时候，一定要调用block;
  * @param  block 动画完成后的block
  * @return void

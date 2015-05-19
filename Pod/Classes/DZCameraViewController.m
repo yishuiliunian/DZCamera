@@ -25,7 +25,6 @@ UIImage* DZCameraCachedImageByName(NSString* name) {
 
 
 static NSString* const kPSObjectKeyFrame = @"frame";
-static float const kPSCameraPreviewHeight = 426;
 @interface DZCameraViewController () <DZCameraManagerDelegate>
 {
     //这些是相机的一些控件
