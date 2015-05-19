@@ -34,4 +34,5 @@
  *  @return 相机界面的实例
  */
 - (instancetype) initWithCameraDevicePosition:(AVCaptureDevicePosition)position;
+- (void) captureStillImage;
 @end

@@ -121,7 +121,7 @@ const float kDZAnimationDefaultDuration = 0.25;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void) cameraViewControllerDidUserCancel:(DZCameraViewController *)cameraViewController
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -155,7 +155,7 @@ const float kDZAnimationDefaultDuration = 0.25;
     
     
     void(^animationBlock)(void) = ^(void) {
-#warning 这里需要对动画进行处理
+        
     };
     
     void(^finishAnimationBlock)(void) = ^(void) {

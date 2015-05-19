@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 @class DZCameraViewController;
 @protocol DZCameraViewControllerDelegate <NSObject>
+@optional
 
 /**
  * 将要拍照
@@ -64,13 +65,7 @@
  */
 - (void) cameraViewController:(DZCameraViewController *)cameraViewController didGetImageFromCamera:(UIImage*)image;
 
-/**
- * 用户从相册获取了图片
- * @param   camerViewController 相机视图控制器
- @param 从相册获取的图片
- * @return void
- */
-- (void) cameraViewController:(DZCameraViewController *)cameraViewController didGetImageFromAlbum:(UIImage*)image;
+
 
 
 @end
